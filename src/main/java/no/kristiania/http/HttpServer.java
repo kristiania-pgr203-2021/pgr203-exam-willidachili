@@ -43,6 +43,20 @@ public class HttpServer {
             return;
         }
  */
+        //Will be replaced by controller
+        if (requestTarget.equals("/api/questions")) {
+
+            String responseText = "";
+
+            int value = 1;
+            for (String category : categories) {
+                //noinspection StringConcatenationInLoop
+                responseText += "<option value=" + value + ">" + category + "</option>";
+                value++;
+            }
+
+            writeOKResponse(clientSocket, responseText, "text/html");
+        }
 
 
         if (rootDirectory != null && Files.exists(rootDirectory.resolve(requestTarget.substring(1)))) {
