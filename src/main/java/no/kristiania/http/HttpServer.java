@@ -3,11 +3,9 @@ package no.kristiania.http;
 import no.kristiania.questionnaire.Question;
 import no.kristiania.questionnaire.QuestionDao;
 import org.flywaydb.core.Flyway;
-import org.flywaydb.core.internal.database.base.TestContainersDatabaseType;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -21,7 +19,6 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class HttpServer {
-
     private final ServerSocket serverSocket;
     private Path rootDirectory;
 
