@@ -49,9 +49,10 @@ public class HttpServer {
             String responseText = "";
 
             int value = 1;
-            for (String category : categories) {
+           // for (String category : categories)
+            {
                 //noinspection StringConcatenationInLoop
-                responseText += "<option value=" + value + ">" + category + "</option>";
+               // responseText += "<option value=" + value + ">" + category + "</option>";
                 value++;
             }
 
