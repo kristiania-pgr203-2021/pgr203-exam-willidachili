@@ -12,7 +12,7 @@ public class QuestionDaoTest {
 
 
     @Test
-    void shouldListAllQuestions() throws SQLException {
+    void shouldListAllQuestionsInDB() throws SQLException {
         Question question = new Question();
         question.setTitle("Hund");
         question.setText("Din favorit blant disse?");
