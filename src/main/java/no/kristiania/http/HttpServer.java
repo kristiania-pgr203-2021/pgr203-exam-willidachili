@@ -1,17 +1,20 @@
 package no.kristiania.http;
 
+import no.kristiania.controllers.Controller;
+import no.kristiania.controllers.AddQuestionController;
+import no.kristiania.controllers.ListQuestionsController;
 import no.kristiania.questionnaire.Question;
 import no.kristiania.questionnaire.QuestionDao;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
+import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,9 +23,9 @@ import java.util.*;
 
 public class HttpServer {
     private final ServerSocket serverSocket;
-    private Path rootDirectory;
+    private final HashMap<String, Controller> controllers = new HashMap<>();
 
-    private final QuestionDao questionDao = new QuestionDao(createDataSource());
+//    private final QuestionDao questionDao = new QuestionDao(createDataSource());
 
 
 
@@ -48,27 +51,33 @@ public class HttpServer {
         String[] requestLine = httpMessage.startLine.split(" ");
         String requestTarget = requestLine[1];
 
-/*
-
-        if (controllers.containsKey(requestTarget)){
-            HttpMessage response = controllers.get(requestTarget).handle(httpMessage);
-            response.write(clientSocket);
-            return;
+        int questionPos = requestTarget.indexOf('?');
+        String fileTarget;
+        String query = null;
+        if (questionPos != -1) {
+            fileTarget = requestTarget.substring(0, questionPos);
+            query = requestTarget.substring(questionPos+1);
+        } else {
+            fileTarget = requestTarget;
         }
- */
-        //Will be replaced by controller
-        if (requestTarget.equals("/api/newQuestions")) {
 
-            Map<String, String> queryMap = parseRequestParameters(httpMessage.messageBody);
+
+
+        //Will be replaced by controller
+        /*if (requestTarget.equals("/api/newQuestions")) {
+
+            Map<String, String> queryMap = HttpMessage.parseRequestParameters(httpMessage.messageBody);
             Question question = new Question();
             question.setTitle(queryMap.get("title"));
             question.setText(queryMap.get("text"));
 
             questionDao.save(question);
 
-            String responseText = "<script>alert(\"" + question.getTitle() + " har blitt lagt til i questions\"); window.location.href = \"/index.html\"</script>";
+            httpMessage.redirect(clientSocket, "/index.html");
 
-            writeOKResponse(clientSocket, responseText, "text/html");
+//            String responseText = "<script>alert(\"" + question.getTitle() + " har blitt lagt til i questions\"); window.location.href = \"/index.html\"</script>";
+
+//            writeOKResponse(clientSocket, responseText, "text/html");
         } else if (requestTarget.equals("/api/questions")){
             String responseText = "";
 
@@ -78,45 +87,39 @@ public class HttpServer {
 
             writeOKResponse(clientSocket, responseText, "text/html");
 
-        }
+        }*/
 
 
-        if (rootDirectory != null && Files.exists(rootDirectory.resolve(requestTarget.substring(1)))) {
-            String responseText = Files.readString(rootDirectory.resolve(requestTarget.substring(1)));
+        if (controllers.containsKey(requestTarget)){
+            HttpMessage response = controllers.get(requestTarget).handle(httpMessage);
+            response.write(clientSocket);
+        } else {
+            InputStream fileResource = getClass().getResourceAsStream(fileTarget);
+            if (fileResource != null){
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                fileResource.transferTo(buffer);
+                String responseText = buffer.toString();
 
-            String contentType = "text/plain";
-            if (requestTarget.endsWith(".html")) {
-                contentType = "text/html";
-            } else if (requestTarget.endsWith(".css")){
-                contentType = "text/css";
+                String contentType = "text/plain";
+                if(requestTarget.endsWith(".html")) {
+                    contentType = "text/html";
+                } else if (requestTarget.endsWith(".css")) {
+                    contentType = "text/css";
+                }
+
+                writeOKResponse(clientSocket, responseText, contentType);
+                return;
             }
-            writeOKResponse(clientSocket, responseText, contentType);
-            return;
+
+            String responseText = "File not found: " + requestTarget;
+
+            String response = "HTTP/1.1 404 Not found\r\n" +
+                    "Content-Length: " + responseText.length() + "\r\n" +
+                    "Connection: close\r\n" +
+                    "\r\n" +
+                    responseText;
+            clientSocket.getOutputStream().write(response.getBytes());
         }
-
-        String responseText = "File not found: " + requestTarget;
-
-        String response = "HTTP/1.1 404 Not found\r\n" +
-                "Content-Length: " + responseText.length() + "\r\n" +
-                "\r\n" +
-                responseText;
-        clientSocket.getOutputStream().write(response.getBytes());
-    }
-
-
-
-    private Map<String, String> parseRequestParameters(String query) {
-        Map<String, String> queryMap = new HashMap<>();
-        if (query != null) {
-            for (String queryParameter : query.split("&")) {
-                int equalsPos = queryParameter.indexOf('=');
-                String parameterName = queryParameter.substring(0, equalsPos);
-                String parameterValue = queryParameter.substring(equalsPos+1);
-                // URLDecoder for å decode ØÆÅs url converted tilbake til vanligskrift
-                queryMap.put(parameterName, URLDecoder.decode(parameterValue, StandardCharsets.UTF_8));
-            }
-        }
-        return queryMap;
     }
 
 
@@ -148,27 +151,26 @@ public class HttpServer {
 
 
     public static void main(String[] args) throws IOException {
+        DataSource dataSource = createDataSource();
+        QuestionDao questionDao = new QuestionDao(dataSource);
         HttpServer httpServer = new HttpServer(9080);
-        httpServer.setRoot(Paths.get("src/main/resources"));
+        httpServer.addController("/api/newQuestions", new AddQuestionController(questionDao));
+        httpServer.addController("/api/questions", new ListQuestionsController(questionDao));
+        System.out.println("Starting http://localhost:" + httpServer.getPort() + "/index.html");
     }
 
 
 
-    public void setRoot(Path path) {
-        this.rootDirectory = path;
-    }
 
-    public int getActualPort() {
+
+    public int getPort() {
         return serverSocket.getLocalPort();
     }
 
-    /*
 
-    public void addController(String path, HttpController controller) {
+    public void addController(String path, Controller controller) {
         controllers.put(path, controller);
-
     }
-     */
 
 
 

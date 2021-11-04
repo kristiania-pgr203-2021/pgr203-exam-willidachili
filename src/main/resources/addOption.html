@@ -6,17 +6,18 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Add option to question</h1>
+<main>
+  <h1>Add option to question</h1>
 
-<form method="GET" action="/api/alternativeAnswers">
-  <label>Question: <select id="questions" name="questions" /></label>
-  <label>Option: <input type="text" name="option "/></label>
-  <button>Add</button>
-</form>
-<div>
-  <a href="index.html">Return to front page</a>
-</div>
-
+  <form method="GET" action="/api/alternativeAnswers">
+    <label>Question: <select id="questions" name="questions" /></label>
+    <label>Option: <input type="text" name="option "/></label>
+    <button>Add</button>
+  </form>
+  <div>
+    <a href="index.html">Return to front page</a>
+  </div>
+</main>
 </body>
 <script>
   fetch("/api/questionOptions")

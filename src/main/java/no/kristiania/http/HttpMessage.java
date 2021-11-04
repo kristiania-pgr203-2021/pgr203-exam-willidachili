@@ -2,6 +2,8 @@ package no.kristiania.http;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +26,20 @@ public class HttpMessage {
     public HttpMessage(String startLine, String messageBody){
         this.startLine = startLine;
         this.messageBody = messageBody;
+    }
+
+    public static Map<String, String> parseRequestParameters(String query) {
+        Map<String, String> queryMap = new HashMap<>();
+        if (query != null) {
+            for (String queryParameter : query.split("&")) {
+                int equalsPos = queryParameter.indexOf('=');
+                String parameterName = queryParameter.substring(0, equalsPos);
+                String parameterValue = queryParameter.substring(equalsPos+1);
+                // URLDecoder for å decode ØÆÅs url converted tilbake til vanligskrift
+                queryMap.put(parameterName, URLDecoder.decode(parameterValue, StandardCharsets.UTF_8));
+            }
+        }
+        return queryMap;
     }
 
 
@@ -73,6 +89,16 @@ public class HttpMessage {
                 messageBody;
         socket.getOutputStream().write(response.getBytes());
 
+    }
+
+    public void redirect(Socket socket, String location) throws IOException {
+        String response = "HTTP/1.1 303 see other\r\n" +
+                "Content-Length: " + messageBody.getBytes().length + "\r\n" +
+                "Connection: close " + "\r\n" +
+                "Location: " + location + "\r\n" +
+                "\r\n" +
+                messageBody;
+        socket.getOutputStream().write(response.getBytes());
     }
 
 }
