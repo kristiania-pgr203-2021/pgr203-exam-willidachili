@@ -54,35 +54,6 @@ public class HttpServer {
             fileTarget = requestTarget;
         }
 
-
-
-        //Will be replaced by controller
-        /*if (requestTarget.equals("/api/newQuestions")) {
-
-            Map<String, String> queryMap = HttpMessage.parseRequestParameters(httpMessage.messageBody);
-            Question question = new Question();
-            question.setTitle(queryMap.get("title"));
-            question.setText(queryMap.get("text"));
-
-            questionDao.save(question);
-
-            httpMessage.redirect(clientSocket, "/index.html");
-
-//            String responseText = "<script>alert(\"" + question.getTitle() + " har blitt lagt til i questions\"); window.location.href = \"/index.html\"</script>";
-
-//            writeOKResponse(clientSocket, responseText, "text/html");
-        } else if (requestTarget.equals("/api/questions")){
-            String responseText = "";
-
-            for (Question question : questionDao.listAll()){
-                responseText += "<h2>" + question.getTitle() + "</h2> <br> <p>" + question.getText() + "</p>";
-            }
-
-            writeOKResponse(clientSocket, responseText, "text/html");
-
-        }*/
-
-
         if (controllers.containsKey(requestTarget)){
             HttpMessage response = controllers.get(requestTarget).handle(httpMessage);
             if (response.startLine.contains("303")) {

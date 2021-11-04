@@ -44,11 +44,6 @@ public class QuestionDaoTest {
                 "title=Doge&text=wowee&low_label=yes&high_label=no"
         );
         assertEquals(303, postClient.getStatusCode());
-/*
-        Denne delen failer siden POST requesten blir lagret i den ekte DB
-        men vi vil at den skal lagres i testdatadb versjon når den kjøres fra test.
-        Tror jeg trenger en constructør som kan endre datasource i httpServer elns.
-*/
         assertThat(questionDao.listAll())
                 .extracting(Question::getTitle)
                 .contains("Doge");
