@@ -1,18 +1,24 @@
 package no.kristiania.controllers;
 
 import no.kristiania.http.HttpMessage;
+import no.kristiania.questionnaire.Option;
+import no.kristiania.questionnaire.OptionDao;
 import no.kristiania.questionnaire.Question;
 import no.kristiania.questionnaire.QuestionDao;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AddQuestionController implements Controller {
 
     private final QuestionDao questionDao;
+    private final OptionDao optionDao;
 
-    public AddQuestionController(QuestionDao questionDao) {
+    public AddQuestionController(QuestionDao questionDao, OptionDao optionDao) {
         this.questionDao = questionDao;
+        this.optionDao = optionDao;
     }
 
     @Override
@@ -21,11 +27,18 @@ public class AddQuestionController implements Controller {
         Question question = new Question();
         question.setTitle(queryMap.get("title"));
         question.setText(queryMap.get("text"));
-
         questionDao.save(question);
 
+        Option lowLabel = new Option();
+        Option highLabel = new Option();
+        lowLabel.setLabel(queryMap.get("low_label"));
+        lowLabel.setQuestionId(question.getId());
+        highLabel.setLabel(queryMap.get("high_label"));
+        highLabel.setQuestionId(question.getId());
+        optionDao.save(lowLabel);
+        optionDao.save(highLabel);
 
-        HttpMessage response = new HttpMessage("HTTP/1.1 303 see other/r/nLocation: /index.html", "It is done");
+        HttpMessage response = new HttpMessage("HTTP/1.1 303 see other", "It is done");
         return response;
     }
 }

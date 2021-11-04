@@ -3,7 +3,7 @@ package no.kristiania.http;
 import no.kristiania.controllers.Controller;
 import no.kristiania.controllers.AddQuestionController;
 import no.kristiania.controllers.ListQuestionsController;
-import no.kristiania.questionnaire.Question;
+import no.kristiania.questionnaire.OptionDao;
 import no.kristiania.questionnaire.QuestionDao;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
@@ -15,19 +15,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.*;
 
 public class HttpServer {
     private final ServerSocket serverSocket;
     private final HashMap<String, Controller> controllers = new HashMap<>();
-
-//    private final QuestionDao questionDao = new QuestionDao(createDataSource());
-
-
 
     public HttpServer(int port) throws IOException {
         this.serverSocket = new ServerSocket(port);
@@ -92,7 +85,11 @@ public class HttpServer {
 
         if (controllers.containsKey(requestTarget)){
             HttpMessage response = controllers.get(requestTarget).handle(httpMessage);
-            response.write(clientSocket);
+            if (response.startLine.contains("303")) {
+                response.redirect(clientSocket, "/index.html");
+            } else {
+                response.write(clientSocket);
+            }
         } else {
             InputStream fileResource = getClass().getResourceAsStream(fileTarget);
             if (fileResource != null){
@@ -153,9 +150,10 @@ public class HttpServer {
     public static void main(String[] args) throws IOException {
         DataSource dataSource = createDataSource();
         QuestionDao questionDao = new QuestionDao(dataSource);
+        OptionDao optionDao = new OptionDao(dataSource);
         HttpServer httpServer = new HttpServer(9080);
-        httpServer.addController("/api/newQuestions", new AddQuestionController(questionDao));
-        httpServer.addController("/api/questions", new ListQuestionsController(questionDao));
+        httpServer.addController("/api/newQuestions", new AddQuestionController(questionDao, optionDao));
+        httpServer.addController("/api/questions", new ListQuestionsController(questionDao, optionDao));
         System.out.println("Starting http://localhost:" + httpServer.getPort() + "/index.html");
     }
 
