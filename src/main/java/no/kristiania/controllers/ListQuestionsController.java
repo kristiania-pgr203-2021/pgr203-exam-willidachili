@@ -24,14 +24,20 @@ public class ListQuestionsController implements Controller{
 
         for (Question question : questionDao.listAll()){
 
-            responseText += "<h2>" + question.getTitle() + "</h2> <br> <p>" + question.getText() + "</p>";
+            responseText += "<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p>"
+                    + "<form method=\"POST\" action=\"/api/result\">\n <label> " ;
+
 
             for (Option option : optionDao.listAll(question.getId())
             ) {
-                responseText += "<p>" + option.getLabel() + "</p>";
+
+                responseText +=
+
+                        option.getLabel() +" <input type=\"radio\" name=\""+ option.getId() +"\" /></label>\n"
+                        ;
             }
 
-            responseText += "</div>";
+            responseText += "<button>Add</button>\n</form></div>";
 
         }
 

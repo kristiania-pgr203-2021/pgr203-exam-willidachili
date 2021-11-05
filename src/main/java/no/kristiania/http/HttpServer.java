@@ -1,5 +1,6 @@
 package no.kristiania.http;
 
+import no.kristiania.controllers.AddAnswerController;
 import no.kristiania.controllers.Controller;
 import no.kristiania.controllers.AddQuestionController;
 import no.kristiania.controllers.ListQuestionsController;
@@ -125,6 +126,8 @@ public class HttpServer {
         HttpServer httpServer = new HttpServer(9080);
         httpServer.addController("/api/newQuestions", new AddQuestionController(questionDao, optionDao));
         httpServer.addController("/api/questions", new ListQuestionsController(questionDao, optionDao));
+        httpServer.addController("/api/result", new AddAnswerController(questionDao, optionDao));
+
         System.out.println("Starting http://localhost:" + httpServer.getPort() + "/index.html");
     }
 
