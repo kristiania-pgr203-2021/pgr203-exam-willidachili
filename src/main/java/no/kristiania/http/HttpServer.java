@@ -4,6 +4,7 @@ import no.kristiania.controllers.AddAnswerController;
 import no.kristiania.controllers.Controller;
 import no.kristiania.controllers.AddQuestionController;
 import no.kristiania.controllers.ListQuestionsController;
+import no.kristiania.questionnaire.AnswerDao;
 import no.kristiania.questionnaire.OptionDao;
 import no.kristiania.questionnaire.QuestionDao;
 import org.flywaydb.core.Flyway;
@@ -123,10 +124,11 @@ public class HttpServer {
         DataSource dataSource = createDataSource();
         QuestionDao questionDao = new QuestionDao(dataSource);
         OptionDao optionDao = new OptionDao(dataSource);
+        AnswerDao answerDao = new AnswerDao(dataSource);
         HttpServer httpServer = new HttpServer(9080);
         httpServer.addController("/api/newQuestions", new AddQuestionController(questionDao, optionDao));
         httpServer.addController("/api/questions", new ListQuestionsController(questionDao, optionDao));
-        httpServer.addController("/api/result", new AddAnswerController(questionDao, optionDao));
+        httpServer.addController("/api/result", new AddAnswerController(answerDao));
 
         System.out.println("Starting http://localhost:" + httpServer.getPort() + "/index.html");
     }

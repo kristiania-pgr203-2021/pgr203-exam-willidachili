@@ -33,11 +33,11 @@ public class ListQuestionsController implements Controller{
 
                 responseText +=
 
-                        option.getLabel() +" <input type=\"radio\" name=\""+ option.getId() +"\" /></label>\n"
+                        option.getLabel() +" <input type=\"checkbox\" name=\""+ option.getId() +"\" />\n"
                         ;
             }
 
-            responseText += "<button>Add</button>\n</form></div>";
+            responseText += "</label><button>Submit</button>\n</form></div>";
 
         }
 
