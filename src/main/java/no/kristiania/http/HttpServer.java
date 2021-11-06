@@ -128,7 +128,7 @@ public class HttpServer {
         HttpServer httpServer = new HttpServer(9080);
         httpServer.addController("/api/newQuestions", new AddQuestionController(questionDao, optionDao));
         httpServer.addController("/api/questions", new ListQuestionsController(questionDao, optionDao));
-        httpServer.addController("/api/result", new AddAnswerController(answerDao));
+        httpServer.addController("/api/answer", new AddAnswerController(answerDao));
 
         System.out.println("Starting http://localhost:" + httpServer.getPort() + "/index.html");
     }

@@ -42,7 +42,7 @@ public class AnswerDaoTest {
     @Test
     void shouldListInsertedAnswers() throws IOException, SQLException {
         HttpServer server = new HttpServer(0);
-        server.addController("/api/result", new AddAnswerController(answerDao));
+        server.addController("/api/answer", new AddAnswerController(answerDao));
 
         Question question = new Question();
         question.setTitle("Hund");
@@ -61,7 +61,7 @@ public class AnswerDaoTest {
         HttpPostClient postClient = new HttpPostClient(
                 "localhost",
                 server.getPort(),
-                "/api/result",
+                "/api/answer",
                 "1=on&2=on"
         );
         assertEquals(303, postClient.getStatusCode());

@@ -25,7 +25,7 @@ public class ListQuestionsController implements Controller{
         for (Question question : questionDao.listAll()){
 
             responseText += "<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p>"
-                    + "<form method=\"POST\" action=\"/api/result\">\n <label> " ;
+                    + "<form method=\"POST\" action=\"/api/answer\">\n <label> " ;
 
 
             for (Option option : optionDao.listAll(question.getId())
