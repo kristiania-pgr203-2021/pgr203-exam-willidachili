@@ -130,6 +130,8 @@ public class HttpServer {
         httpServer.addController("/api/questions", new ListQuestionsController(questionDao, optionDao));
         httpServer.addController("/api/answer", new AddAnswerController(answerDao));
 
+        //httpServer.addController();
+
         System.out.println("Starting http://localhost:" + httpServer.getPort() + "/index.html");
     }
 
