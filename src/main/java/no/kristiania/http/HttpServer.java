@@ -128,8 +128,8 @@ public class HttpServer {
 
         httpServer.addController("/api/answer", new AddAnswerController(answerDao));
 
-        httpServer.addController("/api/newOption", new AddOptionController(questionDao, optionDao));
-        httpServer.addController("/api/optionsOnQuestion", new ListOptionToAddOnQuestionController(questionDao, optionDao));
+        httpServer.addController("/api/newOption", new AddOptionController(optionDao));
+        httpServer.addController("/api/optionsOnQuestion", new ListAddOptionOnQuestionController(questionDao));
 
 
         System.out.println("Starting http://localhost:" + httpServer.getPort() + "/index.html");

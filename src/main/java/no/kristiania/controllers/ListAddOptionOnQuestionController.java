@@ -8,14 +8,12 @@ import no.kristiania.questionnaire.QuestionDao;
 
 import java.sql.SQLException;
 
-public class ListOptionToAddOnQuestionController implements Controller{
+public class ListAddOptionOnQuestionController implements Controller{
 
     private final QuestionDao questionDao;
-    private final OptionDao optionDao;
 
-    public ListOptionToAddOnQuestionController(QuestionDao questionDao, OptionDao optionDao) {
+    public ListAddOptionOnQuestionController(QuestionDao questionDao) {
         this.questionDao = questionDao;
-        this.optionDao = optionDao;
     }
 
     @Override
@@ -25,13 +23,9 @@ public class ListOptionToAddOnQuestionController implements Controller{
         for (Question question : questionDao.listAll()){
 
             responseText += "<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p>"
-                    + "<form method=\"POST\" action=\"/api/newOption\">\n <label> " ;
-
-
-            responseText += "<div>New option:</div>  <input type=\"text\" id=\"newOptionName\" name=\""+ question.getId() +"\"> ";
-
-
-            responseText += "</label><button>Submit</button>\n</form></div>";
+                    + "<form method=\"POST\" action=\"/api/newOption\">\n <label> "
+                    + "<div>New option:</div>  <input type=\"text\" id=\"newOptionName\" name=\""+ question.getId() +"\"> "
+                    + "</label><button>Submit</button>\n</form></div>";
 
         }
 

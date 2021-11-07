@@ -8,11 +8,10 @@ import java.util.Map;
 
 public class AddOptionController implements Controller{
 
-    private final QuestionDao questionDao;
+
     private final OptionDao optionDao;
 
-    public AddOptionController(QuestionDao questionDao, OptionDao optionDao) {
-        this.questionDao = questionDao;
+    public AddOptionController(OptionDao optionDao) {
         this.optionDao = optionDao;
     }
 
