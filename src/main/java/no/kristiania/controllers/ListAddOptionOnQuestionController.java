@@ -8,14 +8,12 @@ import no.kristiania.questionnaire.QuestionDao;
 
 import java.sql.SQLException;
 
-public class ListQuestionsController implements Controller{
+public class ListAddOptionOnQuestionController implements Controller{
 
     private final QuestionDao questionDao;
-    private final OptionDao optionDao;
 
-    public ListQuestionsController(QuestionDao questionDao, OptionDao optionDao) {
+    public ListAddOptionOnQuestionController(QuestionDao questionDao) {
         this.questionDao = questionDao;
-        this.optionDao = optionDao;
     }
 
     @Override
@@ -25,19 +23,9 @@ public class ListQuestionsController implements Controller{
         for (Question question : questionDao.listAll()){
 
             responseText += "<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p>"
-                    + "<form method=\"POST\" action=\"/api/answer\">\n <label> " ;
-
-
-            for (Option option : optionDao.listAll(question.getId())
-            ) {
-
-                responseText +=
-
-                        option.getLabel() +" <input type=\"checkbox\" name=\""+ option.getId() +"\" />\n"
-                        ;
-            }
-
-            responseText += "</label><button>Submit</button>\n</form></div>";
+                    + "<form method=\"POST\" action=\"/api/newOption\">\n <label> "
+                    + "<div>New option:</div>  <input type=\"text\" id=\"newOptionName\" name=\""+ question.getId() +"\"> "
+                    + "</label><button>Submit</button>\n</form></div>";
 
         }
 
@@ -45,4 +33,5 @@ public class ListQuestionsController implements Controller{
 
         return new HttpMessage("HTTP/1.1 200 OK", responseText);
     }
+
 }
