@@ -6,6 +6,8 @@ import no.kristiania.questionnaire.OptionDao;
 import no.kristiania.questionnaire.QuestionDao;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.ByteArrayOutputStream;
@@ -20,6 +22,7 @@ import java.util.*;
 public class HttpServer {
     private final ServerSocket serverSocket;
     private final HashMap<String, Controller> controllers = new HashMap<>();
+    private static final Logger logger = LoggerFactory.getLogger(HttpServer.class);
 
     public HttpServer(int port) throws IOException {
         this.serverSocket = new ServerSocket(port);
@@ -131,8 +134,7 @@ public class HttpServer {
         httpServer.addController("/api/newOption", new AddOptionController(optionDao));
         httpServer.addController("/api/optionsOnQuestion", new ListAddOptionOnQuestionController(questionDao));
 
-
-        System.out.println("Starting http://localhost:" + httpServer.getPort() + "/index.html");
+        logger.info("Starting http://localhost:{}/index.html", httpServer.getPort());
     }
 
 
