@@ -25,17 +25,11 @@ public class ListOptionToAddOnQuestionController implements Controller{
         for (Question question : questionDao.listAll()){
 
             responseText += "<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p>"
-                    + "<form method=\"POST\" action=\"/api/answer\">\n <label> " ;
+                    + "<form method=\"POST\" action=\"/api/newOption\">\n <label> " ;
 
 
-            for (Option option : optionDao.listAll(question.getId())
-            ) {
+            responseText += "<div>New option:</div>  <input type=\"text\" id=\"newOptionName\" name=\""+ question.getId() +"\"> ";
 
-                responseText +=
-
-                        option.getLabel() +" <input type=\"checkbox\" name=\""+ option.getId() +"\" />\n"
-                ;
-            }
 
             responseText += "</label><button>Submit</button>\n</form></div>";
 
