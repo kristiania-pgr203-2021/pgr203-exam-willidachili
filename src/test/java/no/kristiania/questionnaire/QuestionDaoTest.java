@@ -1,6 +1,8 @@
 package no.kristiania.questionnaire;
 
 import no.kristiania.controllers.AddQuestionController;
+import no.kristiania.controllers.EditQuestionController;
+import no.kristiania.controllers.ListEditQuestionsController;
 import no.kristiania.http.HttpPostClient;
 import no.kristiania.http.HttpServer;
 import org.junit.jupiter.api.Test;
@@ -33,7 +35,7 @@ public class QuestionDaoTest {
     }
 
     @Test
-    void shouldListInsertedQuestions() throws IOException, SQLException {
+    void shouldContainInsertedQuestions() throws IOException, SQLException {
         HttpServer server = new HttpServer(0);
         server.addController("/api/newQuestions", new AddQuestionController(questionDao, optionDao));
 
@@ -49,4 +51,29 @@ public class QuestionDaoTest {
                 .contains("Doge");
     }
 
+    @Test
+    void ShouldListEditedQuestions() throws IOException, SQLException {
+        HttpServer server = new HttpServer(0);
+        server.addController("/api/newEditedQuestions", new EditQuestionController(questionDao));
+        server.addController("/api/editQuestions", new ListEditQuestionsController(questionDao));
+
+        Question question = new Question();
+        question.setTitle("Hund");
+        question.setText("Din favorit blant disse?");
+
+        questionDao.save(question);
+
+        HttpPostClient postClient = new HttpPostClient(
+                "localhost",
+                server.getPort(),
+                "/api/newEditedQuestions",
+                "1|Title#=Katt"
+        );
+        assertEquals(303, postClient.getStatusCode());
+        assertThat(questionDao.listAll())
+                .extracting(Question::getTitle)
+                .contains("Katt");
+
+
+    }
 }
