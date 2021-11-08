@@ -110,9 +110,9 @@ public class HttpServer {
     }
 
     private String getRootFolder() {
-        String root = "";
+        String root = "src/main/resources/";
         try {
-            File f = new File(".");
+            File f = new File(root);
             root = f.getCanonicalPath();
         } catch (IOException ex){
             ex.printStackTrace();
