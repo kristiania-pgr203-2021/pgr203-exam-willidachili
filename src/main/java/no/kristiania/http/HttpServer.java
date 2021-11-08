@@ -134,7 +134,12 @@ public class HttpServer {
         httpServer.addController("/api/newOption", new AddOptionController(optionDao));
         httpServer.addController("/api/optionsOnQuestion", new ListAddOptionOnQuestionController(questionDao));
 
+
+        httpServer.addController("/api/editQuestions", new ListEditQuestionsController(questionDao));
+        httpServer.addController("/api/newEditedQuestions", new EditQuestionController(questionDao));
+
         logger.info("Starting http://localhost:{}/index.html", httpServer.getPort());
+
     }
 
 

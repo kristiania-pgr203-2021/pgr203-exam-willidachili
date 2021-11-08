@@ -31,6 +31,30 @@ public class QuestionDao {
         }
     }
 
+    public void updateTitle(int questionId, String questionTitle ) throws SQLException {
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "update questions set title = (?) where question_id = (?)"
+            )) {
+                statement.setString(1, questionTitle);
+                statement.setLong(2, questionId);
+                statement.executeUpdate();
+            }
+        }
+    }
+
+    public void updateText(int questionId, String questionText ) throws SQLException {
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "update questions set text = (?) where question_id = (?)"
+            )) {
+                statement.setString(1, questionText);
+                statement.setLong(2, questionId);
+                statement.executeUpdate();
+            }
+        }
+    }
+
     public List<Question> listAll() throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(
