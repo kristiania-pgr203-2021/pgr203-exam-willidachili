@@ -26,7 +26,7 @@ public class EditQuestionController implements Controller{
 
             for (String map: queryMap.keySet()) {
 
-                int linePos = map.indexOf('|');
+                int linePos = map.indexOf('x');
 
                 String parameterQuestionId = map.substring(0, linePos);
 
@@ -37,26 +37,6 @@ public class EditQuestionController implements Controller{
                 } else {
                     questionDao.updateText(Integer.valueOf(parameterQuestionId), queryMap.get(map));
                 }
-                /*
-
-                for (String queryParameter : map) {
-                    int equalsPos = queryParameter.indexOf('|');
-
-
-
-                    String parameterQuestionId = queryParameter.substring(0, equalsPos);
-
-                    String parameterColumn = map.substring(equalsPos+1);
-                    StringBuffer column = new StringBuffer(parameterColumn);
-                    column.deleteCharAt(column.length()-1);
-
-                    if (column.toString().equals("Title")){
-                        questionDao.updateTitle(Integer.valueOf(parameterQuestionId), queryMap.get(map));
-                    }else {
-                        questionDao.updateText(Integer.valueOf(parameterQuestionId), queryMap.get(map));
-                    }
-                }
-                 */
             }
 
         HttpMessage response = new HttpMessage("HTTP/1.1 303 see other", "It is done");
