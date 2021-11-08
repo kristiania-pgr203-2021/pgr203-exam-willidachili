@@ -77,8 +77,8 @@ public class HttpServer {
 
                 writeOKResponse(clientSocket, responseText, contentType);
                 return;
-            }
 
+            }
             if(requestTarget.endsWith(".ico")){
 
                 String rootDir = getRootFolder();
@@ -89,13 +89,14 @@ public class HttpServer {
                 printer.println(writeOKResponseTEST(file.length()));
 
                 InputStream fs = new FileInputStream(file);
-                byte[] buffer = new byte[1000];
+                byte[] buffer2 = new byte[1000];
                 while (fs.available()>0){
-                    printer.write(buffer, 0, fs.read(buffer));
+                    printer.write(buffer2, 0, fs.read(buffer2));
                 }
                 fs.close();
-
+                return;
             }
+
 
             String responseText = "File not found: " + requestTarget;
 
