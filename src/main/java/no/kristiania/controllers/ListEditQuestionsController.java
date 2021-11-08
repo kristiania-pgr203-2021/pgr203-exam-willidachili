@@ -21,8 +21,8 @@ public class ListEditQuestionsController implements Controller{
 
             responseText += "<h2>Current title:" + question.getTitle() + "</h2> <p>Current text:" + question.getText() + "</p>"
                     + "<form method=\"POST\" action=\"/api/newEditedQuestions\">\n <label> "
-                    + "<div>New title:</div>  <input type=\"text\" id=\"newTitleName\" name=\""+ question.getId() +"|Title#\"> "
-                    + "<div>New text:</div>  <input type=\"text\" id=\"newLabel\" name=\""+ question.getId() +"|Text#\"> "
+                    + "<div>New title:</div>  <input type=\"text\" id=\"newTitleName\" name=\""+ question.getId() +"|Title\"> "
+                    + "<div>New text:</div>  <input type=\"text\" id=\"newLabel\" name=\""+ question.getId() +"|Text\"> "
                     + "</label><button>Submit</button>\n</form></div>";
 
         }

@@ -67,7 +67,7 @@ public class QuestionDaoTest {
                 "localhost",
                 server.getPort(),
                 "/api/newEditedQuestions",
-                "1|Title#=Katt"
+                "1|Title=Katt"
         );
         assertEquals(303, postClient.getStatusCode());
         assertThat(questionDao.listAll())
