@@ -73,29 +73,30 @@ public class HttpServer {
                     contentType = "text/html";
                 } else if (requestTarget.endsWith(".css")) {
                     contentType = "text/css";
+                } else if(requestTarget.endsWith(".ico")){
+
+                    String rootDir = getRootFolder();
+                    String path = Paths.get(rootDir, requestTarget).toString();
+                    File file = new File(path);
+                    PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+
+                    printer.println(writeOKResponseTEST(file.length()));
+
+                    InputStream fs = new FileInputStream(file);
+                    byte[] buffer2 = new byte[1000];
+                    while (fs.available()>0){
+                        printer.write(buffer2, 0, fs.read(buffer2));
+                    }
+                    fs.close();
+                    return;
                 }
 
                 writeOKResponse(clientSocket, responseText, contentType);
                 return;
 
             }
-            if(requestTarget.endsWith(".ico")){
 
-                String rootDir = getRootFolder();
-                String path = Paths.get(rootDir, requestTarget).toString();
-                File file = new File(path);
-                PrintStream printer = new PrintStream(clientSocket.getOutputStream());
 
-                printer.println(writeOKResponseTEST(file.length()));
-
-                InputStream fs = new FileInputStream(file);
-                byte[] buffer2 = new byte[1000];
-                while (fs.available()>0){
-                    printer.write(buffer2, 0, fs.read(buffer2));
-                }
-                fs.close();
-                return;
-            }
 
 
             String responseText = "File not found: " + requestTarget;
@@ -106,6 +107,7 @@ public class HttpServer {
                     "\r\n" +
                     responseText;
             clientSocket.getOutputStream().write(response.getBytes());
+
         }
     }
 
@@ -133,9 +135,7 @@ public class HttpServer {
     private String writeOKResponseTEST(Long length){
         String response = "HTTP/1.1 200 OK\r\n" +
                 "Content-Length: " + length + "\r\n" +
-                "Content-Type: image/x-icon .ico\"\r\n" +
-                "Connection: close " + "\r\n" +
-                "\r\n";
+                "Content-Type: image/x-icon .ico\"\r\n";
         return response;
     }
 

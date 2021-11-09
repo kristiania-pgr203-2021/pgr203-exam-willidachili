@@ -50,6 +50,18 @@ public class HttpServerTest {
 
     }
 
+    @Test
+    void ShouldFindFavicon() throws IOException {
+        HttpServer server = new HttpServer(0);
+
+        HttpClient client = new HttpClient("localhost", server.getPort(),"/favicon.ico");
+
+        client.getMessageContent();
+
+        assertEquals(200, client.getResponseCode());
+
+    }
+
     //TODO Legge til ny test som sjekker /api/optionsOnQuestion sitt innhold for å vite at controlleren funker.
     // burde ligne på shouldFindQuestions
 }
