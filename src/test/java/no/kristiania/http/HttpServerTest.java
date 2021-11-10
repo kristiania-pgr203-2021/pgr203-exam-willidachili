@@ -62,6 +62,4 @@ public class HttpServerTest {
 
     }
 
-    //TODO Legge til ny test som sjekker /api/optionsOnQuestion sitt innhold for å vite at controlleren funker.
-    // burde ligne på shouldFindQuestions
 }

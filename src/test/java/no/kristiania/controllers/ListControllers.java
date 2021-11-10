@@ -45,12 +45,12 @@ public class ListControllers {
         assertEquals(200, client.getStatusCode());
 
         assertThat(client.getMessageContent()
-                .contains("Dette er en test"));
+                .contains("<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p>"));
     }
 
 
     @Test
-    void shouldWriteOptionsOnQuestions() throws IOException, SQLException {
+    void shouldWriteAddOptionOnQuestionsPage() throws IOException, SQLException {
         server.addController("/api/optionsOnQuestion", new ListAddOptionOnQuestionController(questionDao));
 
         Option option = new Option();
@@ -66,11 +66,22 @@ public class ListControllers {
         assertEquals(200, client.getStatusCode());
 
         assertThat(client.getMessageContent()
-                .contains("Denne teksten er en test"));
+                .contains("<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p>"));
     }
 
 
     @Test
-    void shouldWriteEditQuestionsPage() {
+    void shouldWriteEditQuestionsPage() throws IOException {
+        server.addController("/api/editQuestions", new ListEditQuestionsController(questionDao));
+
+        HttpClient client = new HttpClient(
+                "localhost",
+                server.getPort(),
+                "/api/editQuestions"
+        );
+        assertEquals(200, client.getStatusCode());
+
+        assertThat(client.getMessageContent()
+                .contains("Current title:" + question.getTitle()));
     }
 }
