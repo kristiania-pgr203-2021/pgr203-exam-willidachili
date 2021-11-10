@@ -10,12 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.io.ByteArrayOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -75,11 +73,31 @@ public class HttpServer {
                     contentType = "text/html";
                 } else if (requestTarget.endsWith(".css")) {
                     contentType = "text/css";
+                } else if(requestTarget.endsWith(".ico")){
+
+                    String rootDir = getRootFolder();
+                    String path = Paths.get(rootDir, requestTarget).toString();
+                    File file = new File(path);
+                    PrintStream printer = new PrintStream(clientSocket.getOutputStream());
+
+                    printer.println(writeOKResponseTEST(file.length()));
+
+                    InputStream fs = new FileInputStream(file);
+                    byte[] buffer2 = new byte[1000];
+                    while (fs.available()>0){
+                        printer.write(buffer2, 0, fs.read(buffer2));
+                    }
+                    fs.close();
+                    return;
                 }
 
                 writeOKResponse(clientSocket, responseText, contentType);
                 return;
+
             }
+
+
+
 
             String responseText = "File not found: " + requestTarget;
 
@@ -89,9 +107,20 @@ public class HttpServer {
                     "\r\n" +
                     responseText;
             clientSocket.getOutputStream().write(response.getBytes());
+
         }
     }
 
+    private String getRootFolder() {
+        String root = "src/main/resources/";
+        try {
+            File f = new File(root);
+            root = f.getCanonicalPath();
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return root;
+    }
 
     private void writeOKResponse(Socket clientSocket, String responseText, String contentType) throws IOException {
         String response = "HTTP/1.1 200 OK\r\n" +
@@ -101,6 +130,13 @@ public class HttpServer {
                 "\r\n" +
                 responseText;
         clientSocket.getOutputStream().write(response.getBytes());
+    }
+
+    private String writeOKResponseTEST(Long length){
+        String response = "HTTP/1.1 200 OK\r\n" +
+                "Content-Length: " + length + "\r\n" +
+                "Content-Type: image/x-icon .ico\"\r\n";
+        return response;
     }
 
 
