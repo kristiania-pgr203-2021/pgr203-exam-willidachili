@@ -20,7 +20,7 @@ public class OptionDaoTest {
     private final OptionDao optionDao = new OptionDao(TestData.testDataSource());
 
     @Test
-    void shouldReturnSavedOptions() throws SQLException {
+    void shouldContainSavedOptions() throws SQLException {
         Question question = new Question();
         question.setTitle("Hund");
         question.setText("Din favorit blant disse?");
@@ -42,7 +42,7 @@ public class OptionDaoTest {
     }
 
     @Test
-    void ShouldListAddedOptions() throws IOException, SQLException {
+    void ShouldContainAddedOption() throws IOException, SQLException {
         HttpServer server = new HttpServer(0);
         server.addController("/api/newOption", new AddOptionController(optionDao));
 

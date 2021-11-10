@@ -35,7 +35,7 @@ public class QuestionDaoTest {
     }
 
     @Test
-    void shouldContainInsertedQuestions() throws IOException, SQLException {
+    void shouldReturnInsertedQuestions() throws IOException, SQLException {
         HttpServer server = new HttpServer(0);
         server.addController("/api/newQuestions", new AddQuestionController(questionDao, optionDao));
 
@@ -52,7 +52,7 @@ public class QuestionDaoTest {
     }
 
     @Test
-    void ShouldListEditedQuestions() throws IOException, SQLException {
+    void ShouldReturnEditedQuestion() throws IOException, SQLException {
         HttpServer server = new HttpServer(0);
         server.addController("/api/newEditedQuestions", new EditQuestionController(questionDao));
         server.addController("/api/editQuestions", new ListEditQuestionsController(questionDao));
