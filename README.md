@@ -18,7 +18,8 @@ Dette programmet består av en http-server, FlywayDB scripts for opprettelse av 
 * Favorittikon - 
 ---
 * .css håndtering med <!DOCTYPE html> - Vi la til en else if sjekk for .css i handleClient metoden i HttpServer slik at Content-Type headeren blir satt til text/css.
-
+---
+* ![datamodell](https://user-images.githubusercontent.com/71970061/141373174-849c8ec7-78ea-4c2d-9b84-6f560fc6a708.PNG)
 ## Beskriv hvordan programmet skal testes:
 I rot-katalogen (hvor du har pgr203.properties og target katalog med .jar filen) kjører du denne kommandoen via kommandolinje:
 ```
@@ -79,15 +80,17 @@ java -jar target\pgr203-exam-willidachili-1.0-SNAPSHOT.jar
 * [ ] Dersom brukeren går til http://localhost:8080 får man 404. Serveren burde i stedet returnere innholdet av index.html
 * [x] Et favorittikon er et lite ikon som nettleseren viser i tab-vinduer for en webapplikasjon. Kan dere lage et favorittikon for deres server? Tips: ikonet er en binærfil og ikke en tekst og det går derfor ikke an å laste den inn i en StringBuilder
 * [ ] I forelesningen har vi sett på å innføre begrepet Controllers for å organisere logikken i serveren. Unntaket fra det som håndteres med controllers er håndtering av filer på disk. Kan dere skrive om HttpServer til å bruke en FileController for å lese filer fra disk?
-* [ ] Kan dere lage noen diagrammer som illustrerer hvordan programmet deres virker?
+* [x] Kan dere lage noen diagrammer som illustrerer hvordan programmet deres virker?
 * [ ] JDBC koden fra forelesningen har en feil ved retrieve dersom id ikke finnes. Kan dere rette denne?
 * [x] I forelesningen fikk vi en rar feil med CSS når vi hadde `<!DOCTYPE html>`. Grunnen til det er feil content-type. Klarer dere å fikse det slik at det fungerer å ha `<!DOCTYPE html>` på starten av alle HTML-filer?
 * [ ] Klarer dere å lage en Coverage-rapport med GitHub Actions med Coveralls? (Advarsel: Foreleser har nylig opplevd feil med Coveralls så det er ikke sikkert dere får det til å virke)
 * [ ] FARLIG: I løpet av kurset har HttpServer og tester fått funksjonalitet som ikke lenger er nødvendig. Klarer dere å fjerne alt som er overflødig nå uten å også fjerne kode som fortsatt har verdi? (Advarsel: Denne kan trekke ned dersom dere gjør det feil!)
 * [x] UML diagram som dokumenterer datamodell og/eller arkitektur (presentert i README.md)
+
 Mulige ekstrapoeng fortalt i forelesninger som vi tokk med:
 * [x] Implementere update commando på database via nettsiden. (dato: 6/10)
 * [x] God bruk av DAO-pattern
 * [x] God bruk av Controller-pattern
+
 Annet:
 * [x] Godt forklarende README.md med illustrerende bilder
