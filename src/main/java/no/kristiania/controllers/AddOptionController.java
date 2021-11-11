@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class AddOptionController implements Controller{
 
-
     private final OptionDao optionDao;
 
     public AddOptionController(OptionDao optionDao) {
@@ -19,18 +18,12 @@ public class AddOptionController implements Controller{
     public HttpMessage handle(HttpMessage request) throws SQLException {
         Map<String, String> queryMap = HttpMessage.parseRequestParameters(request.messageBody);
 
-
         for (String map: queryMap.keySet()) {
             Option option = new Option();
-
             option.setQuestionId(Long.parseLong(map));
             option.setLabel(queryMap.get(map));
-
-
             optionDao.save(option);
         }
-
-        HttpMessage response = new HttpMessage("HTTP/1.1 303 see other", "It is done");
-        return response;
+        return new HttpMessage("HTTP/1.1 303 see other", "It is done");
     }
 }

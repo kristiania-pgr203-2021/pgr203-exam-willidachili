@@ -27,22 +27,13 @@ public class ListQuestionsController implements Controller{
             responseText += "<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p>"
                     + "<form method=\"POST\" action=\"/api/answer\">\n <label> " ;
 
-
             for (Option option : optionDao.listAll(question.getId())
             ) {
 
-                responseText +=
-
-                        option.getLabel() +" <input type=\"checkbox\" name=\""+ option.getId() +"\" />\n"
-                        ;
+                responseText += option.getLabel() +" <input type=\"checkbox\" name=\""+ option.getId() +"\" />\n";
             }
-
             responseText += "</label><button>Submit</button>\n</form></div>";
-
         }
-
-
-
         return new HttpMessage("HTTP/1.1 200 OK", responseText);
     }
 }

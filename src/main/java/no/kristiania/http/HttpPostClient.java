@@ -7,13 +7,11 @@ import java.nio.charset.StandardCharsets;
 
 public class HttpPostClient {
 
-
     private final int statusCode;
     private final HttpMessage httpMessage;
 
     public HttpPostClient(String host, int port, String requestTarget, String contentBody) throws IOException {
         Socket socket = new Socket(host, port);
-
 
         String request = "POST " + requestTarget + " HTTP/1.1\r\n" +
                 "Host: " + host + "\r\n" +
@@ -31,7 +29,4 @@ public class HttpPostClient {
     public int getStatusCode() {
         return statusCode;
     }
-
-
-
 }

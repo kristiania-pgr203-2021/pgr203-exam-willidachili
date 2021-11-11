@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class HttpMessage {
 
-
     public String startLine;
     public Map<String, String> headerFields = new HashMap<>();
     public String messageBody;
@@ -21,7 +20,6 @@ public class HttpMessage {
             messageBody = HttpMessage.readBytes(socket, getContentLength());
         }
     }
-
 
     public HttpMessage(String startLine, String messageBody){
         this.startLine = startLine;
@@ -42,7 +40,6 @@ public class HttpMessage {
         return queryMap;
     }
 
-
     public String getHeader(String headerName) {
         return headerFields.get(headerName);
     }
@@ -50,7 +47,6 @@ public class HttpMessage {
     public int getContentLength() {
         return Integer.parseInt(getHeader("Content-Length"));
     }
-
 
     static String readBytes(Socket socket, int contentLength) throws IOException {
         StringBuilder buffer = new StringBuilder();
@@ -88,7 +84,6 @@ public class HttpMessage {
                 "\r\n" +
                 messageBody;
         socket.getOutputStream().write(response.getBytes());
-
     }
 
     public void redirect(Socket socket, String location) throws IOException {
@@ -100,5 +95,4 @@ public class HttpMessage {
                 messageBody;
         socket.getOutputStream().write(response.getBytes());
     }
-
 }

@@ -19,8 +19,8 @@ public class AddAnswerController implements Controller{
     public HttpMessage handle(HttpMessage request) throws SQLException {
         Map<String, String> queryMap = HttpMessage.parseRequestParameters(request.messageBody);
 
-        //Henter Nøkkel siden hvis nøkkelen fins så er det fordi
-        //det svarsalternativet ble valgt
+        //Henter Nøkkel siden hvis nøkkelen finnes så er det fordi
+        //det svaralternativet ble valgt
         for (String map: queryMap.keySet()) {
             Answer answer = new Answer();
             answer.setOptionId(Long.parseLong(map));
@@ -28,12 +28,6 @@ public class AddAnswerController implements Controller{
             answer.setResponseId(420L);
             answerDao.save(answer);
         }
-
-
-
-
-
-        HttpMessage response = new HttpMessage("HTTP/1.1 303 see other", "It is done");
-        return response;
+        return new HttpMessage("HTTP/1.1 303 see other", "It is done");
     }
 }

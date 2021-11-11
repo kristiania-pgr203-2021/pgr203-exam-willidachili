@@ -20,7 +20,6 @@ public class AnswerDao {
                 statement.setLong(1, answer.getResponseId());
                 statement.setLong(2, answer.getOptionId());
                 statement.executeUpdate();
-
             }
         }
     }

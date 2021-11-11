@@ -7,6 +7,7 @@ import no.kristiania.questionnaire.QuestionDao;
 import java.sql.SQLException;
 
 public class ListEditQuestionsController implements Controller{
+
     private final QuestionDao questionDao;
 
     public ListEditQuestionsController(QuestionDao questionDao) {
@@ -27,12 +28,7 @@ public class ListEditQuestionsController implements Controller{
                     + "<div>New text:</div>  <input type=\"text\" id=\"newLabel\" name=\""+ question.getId() +"xText\"> "
                     + "</label><button>Submit</button>"
                     + "\n</form></div>";
-
         }
-
-
-
         return new HttpMessage("HTTP/1.1 200 OK", responseText);
     }
-
 }

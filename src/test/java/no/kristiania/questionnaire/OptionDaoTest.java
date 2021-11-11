@@ -7,17 +7,19 @@ import no.kristiania.http.HttpPostClient;
 import no.kristiania.http.HttpServer;
 import org.junit.jupiter.api.Test;
 
+
 import java.io.IOException;
+import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OptionDaoTest {
 
-    private final QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
-    private final OptionDao optionDao = new OptionDao(TestData.testDataSource());
+    DataSource dataSource = TestData.testDataSource();
+    private final QuestionDao questionDao = new QuestionDao(dataSource);
+    private final OptionDao optionDao = new OptionDao(dataSource);
 
     @Test
     void shouldContainSavedOptions() throws SQLException {
