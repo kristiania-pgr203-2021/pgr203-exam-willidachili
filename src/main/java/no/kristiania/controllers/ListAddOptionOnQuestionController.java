@@ -3,7 +3,6 @@ package no.kristiania.controllers;
 import no.kristiania.http.HttpMessage;
 import no.kristiania.questionnaire.Question;
 import no.kristiania.questionnaire.QuestionDao;
-
 import java.sql.SQLException;
 
 public class ListAddOptionOnQuestionController implements Controller{

@@ -80,7 +80,7 @@ public class HttpServer {
                     File file = new File(path);
                     PrintStream printer = new PrintStream(clientSocket.getOutputStream());
 
-                    printer.println(writeFaviconResponse(file.length()));
+                    printer.println(faviconResponse(file.length()));
 
                     InputStream fs = new FileInputStream(file);
                     byte[] bytes = new byte[1000];
@@ -126,11 +126,10 @@ public class HttpServer {
         clientSocket.getOutputStream().write(response.getBytes());
     }
 
-    private String writeFaviconResponse(Long length){
-        String response = "HTTP/1.1 200 OK\r\n" +
+    private String faviconResponse(Long length){
+        return "HTTP/1.1 200 OK\r\n" +
                 "Content-Length: " + length + "\r\n" +
                 "Content-Type: image/x-icon .ico\"\r\n";
-        return response;
     }
 
     private static DataSource createDataSource() throws IOException {

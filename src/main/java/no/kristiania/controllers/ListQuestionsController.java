@@ -5,7 +5,6 @@ import no.kristiania.questionnaire.Option;
 import no.kristiania.questionnaire.OptionDao;
 import no.kristiania.questionnaire.Question;
 import no.kristiania.questionnaire.QuestionDao;
-
 import java.sql.SQLException;
 
 public class ListQuestionsController implements Controller{

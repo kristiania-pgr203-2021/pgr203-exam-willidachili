@@ -6,13 +6,13 @@ import no.kristiania.controllers.ListEditQuestionsController;
 import no.kristiania.http.HttpPostClient;
 import no.kristiania.http.HttpServer;
 import org.junit.jupiter.api.Test;
-
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class QuestionDaoTest {
 
@@ -28,7 +28,7 @@ public class QuestionDaoTest {
     void shouldListAllQuestionsInDB() throws SQLException {
         Question question = new Question();
         question.setTitle("Hund");
-        question.setText("Din favorit blant disse?");
+        question.setText("Din favoritt blant disse?");
 
         questionDao.save(question);
 
@@ -60,7 +60,7 @@ public class QuestionDaoTest {
 
         Question question = new Question();
         question.setTitle("Hund");
-        question.setText("Din favorit blant disse?");
+        question.setText("Din favoritt blant disse?");
 
         questionDao.save(question);
 

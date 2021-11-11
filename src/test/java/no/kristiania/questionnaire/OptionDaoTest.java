@@ -1,13 +1,9 @@
 package no.kristiania.questionnaire;
 
 import no.kristiania.controllers.AddOptionController;
-import no.kristiania.controllers.EditQuestionController;
-import no.kristiania.controllers.ListEditQuestionsController;
 import no.kristiania.http.HttpPostClient;
 import no.kristiania.http.HttpServer;
 import org.junit.jupiter.api.Test;
-
-
 import java.io.IOException;
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -25,7 +21,7 @@ public class OptionDaoTest {
     void shouldContainSavedOptions() throws SQLException {
         Question question = new Question();
         question.setTitle("Hund");
-        question.setText("Din favorit blant disse?");
+        question.setText("Din favoritt blant disse?");
 
         questionDao.save(question);
 
@@ -50,7 +46,7 @@ public class OptionDaoTest {
 
         Question question = new Question();
         question.setTitle("Hund");
-        question.setText("Din favorit blant disse?");
+        question.setText("Din favoritt blant disse?");
 
         questionDao.save(question);
 
@@ -64,8 +60,5 @@ public class OptionDaoTest {
         assertThat(optionDao.listAll(1L))
                 .extracting(Option::getLabel)
                 .contains("Goldenretriever");
-
-
     }
-
 }

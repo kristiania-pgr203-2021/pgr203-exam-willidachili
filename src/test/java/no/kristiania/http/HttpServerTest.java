@@ -6,7 +6,6 @@ import no.kristiania.questionnaire.OptionDao;
 import no.kristiania.questionnaire.QuestionDao;
 import no.kristiania.questionnaire.TestData;
 import org.junit.jupiter.api.Test;
-
 import javax.sql.DataSource;
 import java.io.IOException;
 
@@ -55,5 +54,4 @@ public class HttpServerTest {
 
         assertEquals(200, client.getResponseCode());
     }
-
 }

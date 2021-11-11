@@ -4,7 +4,6 @@ import no.kristiania.controllers.AddAnswerController;
 import no.kristiania.http.HttpPostClient;
 import no.kristiania.http.HttpServer;
 import org.junit.jupiter.api.Test;
-
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;

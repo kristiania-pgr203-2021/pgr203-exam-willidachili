@@ -2,7 +2,6 @@ package no.kristiania.controllers;
 
 import no.kristiania.http.HttpMessage;
 import no.kristiania.questionnaire.*;
-
 import java.sql.SQLException;
 import java.util.Map;
 
