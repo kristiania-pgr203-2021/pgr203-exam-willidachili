@@ -16,10 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class QuestionDaoTest {
 
+    private final HttpServer server = new HttpServer(0);
     DataSource dataSource = TestData.testDataSource();
     private final QuestionDao questionDao = new QuestionDao(dataSource);
     private final OptionDao optionDao = new OptionDao(dataSource);
 
+    public QuestionDaoTest() throws IOException {
+    }
 
     @Test
     void shouldListAllQuestionsInDB() throws SQLException {
@@ -36,7 +39,6 @@ public class QuestionDaoTest {
 
     @Test
     void shouldContainInsertedQuestions() throws IOException, SQLException {
-        HttpServer server = new HttpServer(0);
         server.addController("/api/newQuestions", new AddQuestionController(questionDao, optionDao));
 
         HttpPostClient postClient = new HttpPostClient(
@@ -53,7 +55,6 @@ public class QuestionDaoTest {
 
     @Test
     void ShouldListEditedQuestions() throws IOException, SQLException {
-        HttpServer server = new HttpServer(0);
         server.addController("/api/newEditedQuestions", new EditQuestionController(questionDao));
         server.addController("/api/editQuestions", new ListEditQuestionsController(questionDao));
 
@@ -73,7 +74,5 @@ public class QuestionDaoTest {
         assertThat(questionDao.listAll())
                 .extracting(Question::getTitle)
                 .contains("Katt");
-
-
     }
 }

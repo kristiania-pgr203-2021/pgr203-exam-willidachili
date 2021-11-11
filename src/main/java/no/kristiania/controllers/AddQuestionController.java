@@ -7,9 +7,7 @@ import no.kristiania.questionnaire.Question;
 import no.kristiania.questionnaire.QuestionDao;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class AddQuestionController implements Controller {
 
@@ -38,7 +36,6 @@ public class AddQuestionController implements Controller {
         optionDao.save(lowLabel);
         optionDao.save(highLabel);
 
-        HttpMessage response = new HttpMessage("HTTP/1.1 303 see other", "It is done");
-        return response;
+        return new HttpMessage("HTTP/1.1 303 see other", "It is done");
     }
 }

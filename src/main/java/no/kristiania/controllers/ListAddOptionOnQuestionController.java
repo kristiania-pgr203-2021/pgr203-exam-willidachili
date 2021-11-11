@@ -1,8 +1,6 @@
 package no.kristiania.controllers;
 
 import no.kristiania.http.HttpMessage;
-import no.kristiania.questionnaire.Option;
-import no.kristiania.questionnaire.OptionDao;
 import no.kristiania.questionnaire.Question;
 import no.kristiania.questionnaire.QuestionDao;
 
@@ -28,10 +26,6 @@ public class ListAddOptionOnQuestionController implements Controller{
                     + "</label><button>Submit</button>\n</form></div>";
 
         }
-
-
-
         return new HttpMessage("HTTP/1.1 200 OK", responseText);
     }
-
 }

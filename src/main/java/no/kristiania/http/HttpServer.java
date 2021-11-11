@@ -93,21 +93,15 @@ public class HttpServer {
 
                 writeOKResponse(clientSocket, responseText, contentType);
                 return;
-
             }
 
-
-
-
             String responseText = "File not found: " + requestTarget;
-
             String response = "HTTP/1.1 404 Not found\r\n" +
                     "Content-Length: " + responseText.length() + "\r\n" +
                     "Connection: close\r\n" +
                     "\r\n" +
                     responseText;
             clientSocket.getOutputStream().write(response.getBytes());
-
         }
     }
 
@@ -139,14 +133,11 @@ public class HttpServer {
         return response;
     }
 
-
     private static DataSource createDataSource() throws IOException {
         Properties properties = new Properties();
         try (FileReader reader = new FileReader("pgr203.properties")) {
             properties.load(reader);
         }
-
-
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setURL(properties.getProperty("dataSource.url", "jdbc:postgresql://localhost:5432/postgres"));
         dataSource.setUser(properties.getProperty("dataSource.user"));
@@ -154,7 +145,6 @@ public class HttpServer {
         Flyway.configure().dataSource(dataSource).load().migrate();
         return dataSource;
     }
-
 
     public static void main(String[] args) throws IOException {
         DataSource dataSource = createDataSource();
@@ -164,35 +154,20 @@ public class HttpServer {
         HttpServer httpServer = new HttpServer(9080);
         httpServer.addController("/api/newQuestions", new AddQuestionController(questionDao, optionDao));
         httpServer.addController("/api/questions", new ListQuestionsController(questionDao, optionDao));
-
         httpServer.addController("/api/answer", new AddAnswerController(answerDao));
-
         httpServer.addController("/api/newOption", new AddOptionController(optionDao));
         httpServer.addController("/api/optionsOnQuestion", new ListAddOptionOnQuestionController(questionDao));
-
-
         httpServer.addController("/api/editQuestions", new ListEditQuestionsController(questionDao));
         httpServer.addController("/api/newEditedQuestions", new EditQuestionController(questionDao));
 
         logger.info("Starting http://localhost:{}/index.html", httpServer.getPort());
-
     }
-
-
-
-
 
     public int getPort() {
         return serverSocket.getLocalPort();
     }
 
-
     public void addController(String path, Controller controller) {
         controllers.put(path, controller);
     }
-
-
-
-
-
 }

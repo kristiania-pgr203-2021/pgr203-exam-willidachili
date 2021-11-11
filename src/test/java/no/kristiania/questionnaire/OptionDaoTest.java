@@ -2,15 +2,16 @@ package no.kristiania.questionnaire;
 
 import org.junit.jupiter.api.Test;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OptionDaoTest {
 
-    private final QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
-    private final OptionDao optionDao = new OptionDao(TestData.testDataSource());
+    DataSource dataSource = TestData.testDataSource();
+    private final QuestionDao questionDao = new QuestionDao(dataSource);
+    private final OptionDao optionDao = new OptionDao(dataSource);
 
     @Test
     void shouldReturnSavedOptions() throws SQLException {
