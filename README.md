@@ -53,7 +53,7 @@ java -jar target\pgr203-exam-willidachili-1.0-SNAPSHOT.jar
 ### Koden
 
 * [x] `mvn package` bygger en executable jar-fil
-* [ ] Koden inneholder et godt sett med tester
+* [x] Koden inneholder et godt sett med tester
 * [x] `java -jar target/...jar` (etter `mvn package`) lar bruker legge til og liste ut data fra databasen via webgrensesnitt
 * [x] Serveren leser HTML-filer fra JAR-filen slik at den ikke er avhengig av å kjøre i samme directory som kildekoden
 * [x] Programmet leser `dataSource.url`, `dataSource.username` og `dataSource.password` fra `pgr203.properties` for å connecte til databasen
@@ -84,3 +84,10 @@ java -jar target\pgr203-exam-willidachili-1.0-SNAPSHOT.jar
 * [x] I forelesningen fikk vi en rar feil med CSS når vi hadde `<!DOCTYPE html>`. Grunnen til det er feil content-type. Klarer dere å fikse det slik at det fungerer å ha `<!DOCTYPE html>` på starten av alle HTML-filer?
 * [ ] Klarer dere å lage en Coverage-rapport med GitHub Actions med Coveralls? (Advarsel: Foreleser har nylig opplevd feil med Coveralls så det er ikke sikkert dere får det til å virke)
 * [ ] FARLIG: I løpet av kurset har HttpServer og tester fått funksjonalitet som ikke lenger er nødvendig. Klarer dere å fjerne alt som er overflødig nå uten å også fjerne kode som fortsatt har verdi? (Advarsel: Denne kan trekke ned dersom dere gjør det feil!)
+* [x] UML diagram som dokumenterer datamodell og/eller arkitektur (presentert i README.md)
+Mulige ekstrapoeng fortalt i forelesninger som vi tokk med:
+* [x] Implementere update commando på database via nettsiden. (dato: 6/10)
+* [x] God bruk av DAO-pattern
+* [x] God bruk av Controller-pattern
+Annet:
+* [x] Godt forklarende README.md med illustrerende bilder
