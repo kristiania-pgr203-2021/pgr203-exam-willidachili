@@ -56,6 +56,4 @@ public class HttpServerTest {
         assertEquals(200, client.getResponseCode());
     }
 
-    //TODO Legge til ny test som sjekker /api/optionsOnQuestion sitt innhold for å vite at controlleren funker.
-    // burde ligne på shouldFindQuestions
 }
