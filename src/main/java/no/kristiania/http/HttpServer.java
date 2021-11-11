@@ -5,10 +5,10 @@ import no.kristiania.questionnaire.AnswerDao;
 import no.kristiania.questionnaire.OptionDao;
 import no.kristiania.questionnaire.QuestionDao;
 import org.flywaydb.core.Flyway;
+import org.fusesource.jansi.AnsiConsole;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.sql.DataSource;
 import java.io.*;
 import java.net.ServerSocket;
@@ -80,12 +80,12 @@ public class HttpServer {
                     File file = new File(path);
                     PrintStream printer = new PrintStream(clientSocket.getOutputStream());
 
-                    printer.println(writeOKResponseTEST(file.length()));
+                    printer.println(writeFaviconResponse(file.length()));
 
                     InputStream fs = new FileInputStream(file);
-                    byte[] buffer2 = new byte[1000];
+                    byte[] bytes = new byte[1000];
                     while (fs.available()>0){
-                        printer.write(buffer2, 0, fs.read(buffer2));
+                        printer.write(bytes, 0, fs.read(bytes));
                     }
                     fs.close();
                     return;
@@ -126,7 +126,7 @@ public class HttpServer {
         clientSocket.getOutputStream().write(response.getBytes());
     }
 
-    private String writeOKResponseTEST(Long length){
+    private String writeFaviconResponse(Long length){
         String response = "HTTP/1.1 200 OK\r\n" +
                 "Content-Length: " + length + "\r\n" +
                 "Content-Type: image/x-icon .ico\"\r\n";
@@ -147,6 +147,7 @@ public class HttpServer {
     }
 
     public static void main(String[] args) throws IOException {
+        AnsiConsole.systemInstall();
         DataSource dataSource = createDataSource();
         QuestionDao questionDao = new QuestionDao(dataSource);
         OptionDao optionDao = new OptionDao(dataSource);
