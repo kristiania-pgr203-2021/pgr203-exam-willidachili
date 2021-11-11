@@ -15,11 +15,16 @@ public class AnswerDao {
     public void save(Answer answer) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(
-                    "insert into answers (response_id, option_id) values (?, ?)"
+                    "insert into answers (option_id) values (?)",
+                    Statement.RETURN_GENERATED_KEYS
             )) {
-                statement.setLong(1, answer.getResponseId());
-                statement.setLong(2, answer.getOptionId());
+                statement.setLong(1, answer.getOptionId());
                 statement.executeUpdate();
+
+                try (ResultSet rs = statement.getGeneratedKeys()) {
+                    rs.next();
+                    answer.setResponseId(rs.getLong("response_id"));
+                }
             }
         }
     }
