@@ -1,0 +1,14 @@
+@startuml
+
+actor Browser
+participant HttpServer
+participant controllers
+participant newEditedQuestions
+participant QuestionDao
+database QUESTIONS
+
+Browser -> HttpServer: POST /api/newEditedQuestions
+HttpServer -> controllers: POST /api/newEditedQuestions
+
+
+@enduml
