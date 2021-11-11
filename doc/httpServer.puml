@@ -3,12 +3,19 @@
 actor Browser
 participant HttpServer
 participant controllers
-participant newEditedQuestions
+participant EditQuestionController
 participant QuestionDao
-database QUESTIONS
+database QUESTIONS_DB
 
 Browser -> HttpServer: POST /api/newEditedQuestions
-HttpServer -> controllers: POST /api/newEditedQuestions
-
+HttpServer -> controllers: get("/api/newEditedQuestions")
+HttpServer <-- controllers: EditQuestionController
+HttpServer -> EditQuestionController: response = handle(request)
+EditQuestionController -> EditQuestionController: queryMap(request)
+EditQuestionController -> QuestionDao: updateTitle/-Text(queryMap(request))
+QuestionDao -> QUESTIONS_DB: UPDATE QUESTIONS
+HttpServer <-- EditQuestionController: See Other 303
+HttpServer -> HttpServer: response.write(socket)
+Browser <- HttpServer: HTTP/1.1 303 See Other
 
 @enduml
