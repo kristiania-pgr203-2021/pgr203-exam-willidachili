@@ -1,0 +1,24 @@
+@startuml
+
+actor Browser
+participant HttpServer
+participant Controllers
+participant ListQuestionsController
+participant QuestionDao
+database QUESTIONS_DB
+
+Browser -> HttpServer: GET /index.html
+Browser <-- HttpServer: HTTP/1.1 200 OK
+HttpServer -> Controllers: get(/api/questions)
+HttpServer <-- Controllers: ListQuestionsController
+HttpServer -> ListQuestionsController: response = handle(request)
+ListQuestionsController -> QuestionDao: listAll()
+QuestionDao -> QUESTIONS_DB: SELECT * FROM QUESTIONS
+QuestionDao <-- QUESTIONS_DB: ResultSet
+ListQuestionsController <-- QuestionDao: List<Question>
+HttpServer <-- ListQuestionsController: HTTP/1.1 200 OK +responseText
+HttpServer -> HttpServer: response.write(socket)
+Browser <-- HttpServer: HTTP/1.1 200 OK
+
+
+@enduml
