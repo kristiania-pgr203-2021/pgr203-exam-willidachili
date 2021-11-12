@@ -21,7 +21,7 @@ Dette programmet består av en http-server, FlywayDB scripts for opprettelse av 
 ---
 * Kan dere lage noen diagrammer som illustrerer hvordan programmet deres virker - Disse ligger i pgr203-exam-willidachili/doc mappen, vi valgte å lage to diagrammer som ikke var helt like som vist i forelesning.
 ---
-* UML diagram som dokumenterer datamodell og/eller arkitektur - Dette er slik vår Database ser ut i programmet. Vi valgte å lage siden med tanke på anonymitet så Answer tabellen skal kun holde på svar som blir gjennomført gjennom index.html. På den måten så trenger den egentlig ingen primærnøkkel siden vi tenkte at den skal kun liste ut antall duplikater av option_id. Med en slik spørring: “SELECT COUNT(\*) FROM Answers WHERE option_id = x”. Så siden hver Options har unik id for hver Question vil vi vite hvilket Questions som har x antall svar på en Option. Den har en primærnøkkel nå kun med tanke på potensielt videre bygging av programmet da en vil kunne legge til bruker med cookie. Så man vil da kun trenge å sette reference med FK på response_id til den nye bruker tabellen og flytte Serial Primary key på bruker tabellen på response_id.
+* UML diagram som dokumenterer datamodell og/eller arkitektur - Dette er slik vår Database ser ut i programmet. Vi valgte å lage nettsiden med tanke på anonymitet så Answer tabellen skal kun holde på svar som blir gjennomført gjennom index.html. På den måten så trenger den egentlig ingen egen primærnøkkel siden vi tenkte at den skal kun liste ut antall duplikater av option_id. Med en slik spørring: “SELECT COUNT(\*) FROM Answers WHERE option_id = x”. Så siden hver Options har unik id for hver Question vil vi vite hvilket Questions som har x antall svar på en Option. Den har en primærnøkkel nå kun med tanke på potensielt videre bygging av programmet da en vil kunne legge til bruker med cookie. Så man vil da kun trenge å sette reference med FK på response_id til den nye bruker tabellen og flytte Serial Primary key på bruker tabellen på response_id der.
 <div align=center>
 <img src="https://user-images.githubusercontent.com/71970061/141373174-849c8ec7-78ea-4c2d-9b84-6f560fc6a708.PNG"/>
 </div>
@@ -29,7 +29,7 @@ Dette programmet består av en http-server, FlywayDB scripts for opprettelse av 
 ---
 * Implementere update commando på database via nettsiden - editQuestions.html tar i bruk UPDATE commando for å oppdatere den nye tittelen 
 ---
-* God bruk av DAO-/Controller-pattern - Vi gjorde sam lært i forelesning og så fordelene med det. Så vi antar det at vi fikk brukt det godt og rikitg
+* God bruk av DAO-/Controller-pattern - Vi gjorde sam lært i forelesning og så fordelene med det. Så vi antar da at vi fikk brukt det godt og rikitg
 ---
 * Godt forklarende README.md med illustrerende bilder - Vi prøvde å få det tydelig og oversiktig ikke bare for deg, men for vår egendel også.
 ---
@@ -62,7 +62,7 @@ java -jar target\pgr203-exam-willidachili-1.0-SNAPSHOT.jar
 * [ ] `README.md` inneholder en korrekt link til Github Actions
 * [x] `README.md` beskriver prosjektets funksjonalitet, hvordan man bygger det og hvordan man kjører det
 * [x] `README.md` beskriver eventuell ekstra leveranse utover minimum
-* [ ] `README.md` inneholder et diagram som viser datamodellen
+* [x] `README.md` inneholder et diagram som viser datamodellen
 
 ### Koden
 
@@ -106,4 +106,4 @@ Mulige ekstrapoeng fortalt i forelesninger som vi tokk med:
 * [x] God bruk av Controller-pattern
 
 Annet:
-* [x] Godt forklarende README.md med illustrerende bilder
+* [x] Godt forklarende README.md med illustrerende bilde
