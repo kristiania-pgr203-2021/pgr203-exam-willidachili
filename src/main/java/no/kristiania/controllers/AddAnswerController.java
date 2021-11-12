@@ -19,12 +19,10 @@ public class AddAnswerController implements Controller{
         Map<String, String> queryMap = HttpMessage.parseRequestParameters(request.messageBody);
 
         //Henter Nøkkel siden hvis nøkkelen finnes så er det fordi
-        //det svaralternativet ble valgt
+        //det svaralternativet ble valgt (ligner litt på binary tree)
         for (String map: queryMap.keySet()) {
             Answer answer = new Answer();
             answer.setOptionId(Long.parseLong(map));
-            //FILLER FOR NÅR VI KAN HENTE BRUKER/COOKIE
-            answer.setResponseId(420L);
             answerDao.save(answer);
         }
         return new HttpMessage("HTTP/1.1 303 see other", "It is done");
