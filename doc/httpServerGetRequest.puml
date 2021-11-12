@@ -9,6 +9,7 @@ database QUESTIONS_DB
 
 Browser -> HttpServer: GET /index.html
 Browser <-- HttpServer: HTTP/1.1 200 OK
+Browser -> HttpServer: GET /api/questions
 HttpServer -> Controllers: get(/api/questions)
 HttpServer <-- Controllers: ListQuestionsController
 HttpServer -> ListQuestionsController: response = handle(request)
