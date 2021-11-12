@@ -25,10 +25,13 @@ Dette programmet består av en http-server, FlywayDB scripts for opprettelse av 
 <div align=center>
 <img src="https://user-images.githubusercontent.com/71970061/141373174-849c8ec7-78ea-4c2d-9b84-6f560fc6a708.PNG"/>
 </div>
+
 ---
 * Implementere update commando på database via nettsiden - editQuestions.html tar i bruk UPDATE commando for å oppdatere den nye tittelen 
 ---
-*
+* God bruk av DAO-/Controller-pattern - Vi gjorde sam lært i forelesning og så fordelene med det. Så vi antar det at vi fikk brukt det godt og rikitg
+---
+* Godt forklarende README.md med illustrerende bilder - Vi prøvde å få det tydelig og oversiktig ikke bare for deg, men for vår egendel også.
 ---
 ## Beskriv hvordan programmet skal testes:
 I rot-katalogen (hvor du har pgr203.properties og target katalog med .jar filen) kjører du denne kommandoen via kommandolinje:
