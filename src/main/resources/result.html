@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kristiania Questionnaire Results</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+    <h1>Questionnaire results</h1>
+
+    <div id="result"></div>
+
+    <div>
+        <a href="index.html">Return to front page</a>
+    </div>
+</main>
+</body>
+<script>
+    fetch("/api/results")
+        .then(function(response) {
+            return response.text();
+        }).then(function(text) {
+        document.getElementById("result").innerHTML = text;
+    });
+</script>
+</html>
