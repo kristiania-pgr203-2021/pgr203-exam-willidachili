@@ -129,7 +129,8 @@ public class HttpServer {
     private String faviconResponse(Long length){
         return "HTTP/1.1 200 OK\r\n" +
                 "Content-Length: " + length + "\r\n" +
-                "Content-Type: image/x-icon .ico\"\r\n";
+                "Content-Type: image/x-icon .ico\"\r\n"+
+                "Connection: close \r\n";
     }
 
     private static DataSource createDataSource() throws IOException {
