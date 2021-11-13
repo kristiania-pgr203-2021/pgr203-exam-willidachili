@@ -46,12 +46,12 @@ public class HttpServerTest {
                 .contains("Doge", "wowee");
     }
 
-    @Test
+/*    @Test
     void ShouldFindFavicon() throws IOException {
         HttpClient client = new HttpClient("localhost", server.getPort(),"/favicon.ico");
 
         client.getMessageContent();
 
         assertEquals(200, client.getResponseCode());
-    }
+    }*/
 }
