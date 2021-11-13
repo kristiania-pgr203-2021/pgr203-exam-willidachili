@@ -1,4 +1,4 @@
-[HUSK Å LEGGE TIL MAVEN BADGE HER]
+[![Java CI with Maven](https://github.com/kristiania-pgr203-2021/pgr203-exam-willidachili/actions/workflows/maven.yml/badge.svg)](https://github.com/kristiania-pgr203-2021/pgr203-exam-willidachili/actions/workflows/maven.yml)
 # PGR203 Avansert Java eksamen
 
 ## Beskrivelse av programmet
@@ -53,13 +53,13 @@ java -jar target\pgr203-exam-willidachili-1.0-SNAPSHOT.jar
 ## Vedlegg: Sjekkliste for innlevering
 
 * [x] Dere har lest eksamensteksten
-* [ ] Dere har lastet opp en ZIP-fil med navn basert på navnet på deres Github repository
+* [x] Dere har lastet opp en ZIP-fil med navn basert på navnet på deres Github repository
 * [x] Koden er sjekket inn på github.com/pgr203-2021-repository
 * [x] Dere har committed kode med begge prosjektdeltagernes GitHub konto (alternativt: README beskriver arbeidsform)
 
 ### README.md
 
-* [ ] `README.md` inneholder en korrekt link til Github Actions
+* [x] `README.md` inneholder en korrekt link til Github Actions
 * [x] `README.md` beskriver prosjektets funksjonalitet, hvordan man bygger det og hvordan man kjører det
 * [x] `README.md` beskriver eventuell ekstra leveranse utover minimum
 * [x] `README.md` inneholder et diagram som viser datamodellen
