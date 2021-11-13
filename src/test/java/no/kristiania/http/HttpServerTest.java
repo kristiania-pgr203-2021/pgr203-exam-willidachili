@@ -50,8 +50,6 @@ public class HttpServerTest {
     void ShouldFindFavicon() throws IOException {
         HttpClient client = new HttpClient("localhost", server.getPort(),"/favicon.ico");
 
-        client.getMessageContent();
-
         assertEquals(200, client.getResponseCode());
     }
 }

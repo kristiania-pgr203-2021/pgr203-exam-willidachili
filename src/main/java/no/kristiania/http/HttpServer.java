@@ -74,21 +74,9 @@ public class HttpServer {
                 } else if (requestTarget.endsWith(".css")) {
                     contentType = "text/css";
                 } else if(requestTarget.endsWith(".ico")){
-
-                    String rootDir = getRootFolder();
-                    String path = Paths.get(rootDir, requestTarget).toString();
-                    File file = new File(path);
                     PrintStream printer = new PrintStream(clientSocket.getOutputStream());
-
-                    printer.println(faviconResponse(file.length()));
-
-                    InputStream fs = new FileInputStream(file);
-                    byte[] bytes = new byte[1000];
-                    while (fs.available()>0){
-                        printer.write(bytes, 0, fs.read(bytes));
-                    }
-                    fs.close();
-                    return;
+                    printer.println(faviconResponse(buffer.toByteArray().length));
+                    printer.write(buffer.toByteArray());
                 }
 
                 writeOKResponse(clientSocket, responseText, contentType);
@@ -105,17 +93,6 @@ public class HttpServer {
         }
     }
 
-    private String getRootFolder() {
-        String root = "src/main/resources/";
-        try {
-            File f = new File(root);
-            root = f.getCanonicalPath();
-        } catch (IOException ex){
-            ex.printStackTrace();
-        }
-        return root;
-    }
-
     private void writeOKResponse(Socket clientSocket, String responseText, String contentType) throws IOException {
         String response = "HTTP/1.1 200 OK\r\n" +
                 "Content-Length: " + responseText.getBytes().length + "\r\n" +
@@ -126,7 +103,7 @@ public class HttpServer {
         clientSocket.getOutputStream().write(response.getBytes());
     }
 
-    private String faviconResponse(Long length){
+    private String faviconResponse(int length){
         return "HTTP/1.1 200 OK\r\n" +
                 "Content-Length: " + length + "\r\n" +
                 "Content-Type: image/x-icon .ico\"\r\n";
