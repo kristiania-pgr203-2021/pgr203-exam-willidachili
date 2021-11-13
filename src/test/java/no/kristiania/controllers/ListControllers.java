@@ -6,6 +6,7 @@ import no.kristiania.questionnaire.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -15,17 +16,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ListControllers {
 
     HttpServer server;
+    DataSource dataSource = TestData.testDataSource();
+
     QuestionDao questionDao;
     OptionDao optionDao;
-    AnswerDao answerDao = new AnswerDao(TestData.testDataSource());
+    AnswerDao answerDao = new AnswerDao(dataSource);
 
     Question question;
 
     @BeforeEach
     void setUp() throws IOException, SQLException {
         this.server = new HttpServer(0);
-        this.questionDao = new QuestionDao(TestData.testDataSource());
-        this.optionDao = new OptionDao(TestData.testDataSource());
+        this.questionDao = new QuestionDao(dataSource);
+        this.optionDao = new OptionDao(dataSource);
 
         this.question = new Question();
         question.setTitle("Dette er en test.");
