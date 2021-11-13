@@ -45,10 +45,31 @@ public class AnswerDao {
         }
     }
 
+
     private Answer readFromResultSet(ResultSet rs) throws SQLException {
         Answer answer = new Answer();
         answer.setOptionId(rs.getLong("option_id"));
         answer.setResponseId(rs.getLong("response_id"));
         return answer;
+    }
+
+    public Long numberOfTimesChosen(Long option_id) throws SQLException {
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "select count(*) as antallValgt from answers where option_id = (?)"
+            )) {
+                statement.setLong(1, option_id);
+
+                try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next())
+                    return readFromResultSet2(rs);
+                }
+                return 0L;
+            }
+        }
+    }
+
+    private Long readFromResultSet2(ResultSet rs) throws SQLException {
+        return rs.getLong("antallValgt");
     }
 }
