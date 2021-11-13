@@ -23,15 +23,18 @@ public class ListResultController implements Controller{
 
         for (Question question : questionDao.listAll()){
 
-            responseText += "<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p> \n";
+            responseText += "<h2>" + question.getTitle() + "</h2>" +
+                    "<p>" + question.getText() + "</p>";
 
             for (Option option : optionDao.listAll(question.getId())
             ) {
 
-                responseText += "<p>" + option.getLabel() +" was picked this many times: "+ answerDao.numberOfTimesChosen(option.getId()) +". </p>";
+                responseText += "<p>" + option.getLabel() +" was picked this many times: " +
+                        answerDao.numberOfTimesChosen(option.getId()) +".</p>";
             }
-            responseText += "</div>";
         }
+        responseText += "</div>";
+
         return new HttpMessage("HTTP/1.1 200 OK", responseText);
     }
 }

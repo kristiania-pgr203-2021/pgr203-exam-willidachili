@@ -20,11 +20,12 @@ public class ListAddOptionOnQuestionController implements Controller{
         for (Question question : questionDao.listAll()){
 
             responseText += "<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p>"
-                    + "<form method=\"POST\" action=\"/api/newOption\">\n <label> "
-                    + "<div>New option:</div>  <input type=\"text\" id=\"newOptionName\" name=\""+ question.getId() +"\"> "
-                    + "</label><button>Submit</button>\n</form></div>";
-
+                    + "<form method=\"POST\" action=\"/api/newOption\">"
+                    + "<label for=\"" + question.getId() + "\">New option: </label><input type=\"text\" id=\"" + question.getId() + "\" name=\"" + question.getId() + "\"> "
+                    + "<button>Submit</button></form>";
         }
+        responseText += "</div>";
+
         return new HttpMessage("HTTP/1.1 200 OK", responseText);
     }
 }

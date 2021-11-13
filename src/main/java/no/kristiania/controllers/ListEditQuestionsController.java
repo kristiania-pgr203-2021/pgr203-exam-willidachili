@@ -19,15 +19,16 @@ public class ListEditQuestionsController implements Controller{
 
         for (Question question : questionDao.listAll()){
 
-            responseText += "<h2>Current title:" + question.getTitle() + "</h2> <p>Current text:" + question.getText() + "</p>"
-                    + "<form method=\"POST\" action=\"/api/newEditedQuestions\">\n <label> "
-                    + "<div>New title:</div>  <input type=\"text\" id=\"newTitleName\" name=\""+ question.getId() +"xTitle\"> "
-                    + "</label><button>Submit</button></form>"
-                    + "<form method=\"POST\" action=\"/api/newEditedQuestions\">\n <label> "
-                    + "<div>New text:</div>  <input type=\"text\" id=\"newLabel\" name=\""+ question.getId() +"xText\"> "
-                    + "</label><button>Submit</button>"
-                    + "\n</form></div>";
+            responseText += "<h2>Current title: " + question.getTitle() + "</h2><p>Current text: " + question.getText() + "</p>"
+                    + "<form method=\"POST\" action=\"/api/newEditedQuestions\">"
+                    + "<label for=\"" + question.getId() + "xTitle" + "\">New title: </label><input type=\"text\" id=\"" + question.getId() + "xTitle\" name=\"" + question.getId() + "xTitle\">"
+                    + "<button>Submit</button></form>"
+                    + "<form method=\"POST\" action=\"/api/newEditedQuestions\">"
+                    + "<label for=\"" + question.getId() +"xText" + "\">New text: </label><input type=\"text\" id=\"" + question.getId() + "xText\" name=\"" + question.getId() + "xText\"> "
+                    + "<button>Submit</button></form>";
         }
+        responseText += "</div>";
+
         return new HttpMessage("HTTP/1.1 200 OK", responseText);
     }
 }
