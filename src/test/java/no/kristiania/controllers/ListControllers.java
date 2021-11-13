@@ -6,6 +6,7 @@ import no.kristiania.questionnaire.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -15,16 +16,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ListControllers {
 
     HttpServer server;
+    DataSource dataSource = TestData.testDataSource();
+
     QuestionDao questionDao;
     OptionDao optionDao;
+    AnswerDao answerDao = new AnswerDao(dataSource);
 
     Question question;
 
     @BeforeEach
     void setUp() throws IOException, SQLException {
         this.server = new HttpServer(0);
-        this.questionDao = new QuestionDao(TestData.testDataSource());
-        this.optionDao = new OptionDao(TestData.testDataSource());
+        this.questionDao = new QuestionDao(dataSource);
+        this.optionDao = new OptionDao(dataSource);
 
         this.question = new Question();
         question.setTitle("Dette er en test.");
@@ -83,5 +87,28 @@ public class ListControllers {
 
         assertThat(client.getMessageContent()
                 .contains("Current title:" + question.getTitle()));
+    }
+
+    @Test
+    void shouldWriteResultPage() throws IOException, SQLException {
+        server.addController("/api/results", new ListResultController(questionDao, optionDao, answerDao));
+
+        Option option = new Option();
+        option.setLabel("Denne teksten er en test");
+        option.setQuestionId(1);
+        optionDao.save(option);
+
+        Answer answer = new Answer();
+        answer.setOptionId(1);
+
+        HttpClient client = new HttpClient(
+                "localhost",
+                server.getPort(),
+                "/api/results"
+        );
+        assertEquals(200, client.getStatusCode());
+
+        assertThat(client.getMessageContent())
+                .contains(option.getLabel() +" was picked this many times: "+ answerDao.numberOfTimesChosen(option.getId()));
     }
 }
