@@ -49,7 +49,6 @@ public class HttpServerTest {
     @Test
     void ShouldFindFavicon() throws IOException {
         HttpClient client = new HttpClient("localhost", server.getPort(),"/favicon.ico");
-
         assertEquals(200, client.getResponseCode());
     }
 }
