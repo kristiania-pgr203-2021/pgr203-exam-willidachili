@@ -22,7 +22,7 @@ public class ListAddOptionOnQuestionController implements Controller{
             responseText += "<h2>" + question.getTitle() + "</h2> <p>" + question.getText() + "</p>"
                     + "<form method=\"POST\" action=\"/api/newOption\">"
                     + "<label for=\"" + question.getId() + "\">New option: </label><input type=\"text\" id=\"" + question.getId() + "\" name=\"" + question.getId() + "\"> "
-                    + "<button>Submit</button></form>";
+                    + "<button>Add</button></form>";
         }
         responseText += "</div>";
 
