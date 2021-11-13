@@ -28,7 +28,7 @@ public class ListResultController implements Controller{
             for (Option option : optionDao.listAll(question.getId())
             ) {
 
-                responseText += option.getLabel() +" was picked this many times: "+ answerDao.numberOfTimesChosen(option.getId()) +". \n";
+                responseText += "<p>" + option.getLabel() +" was picked this many times: "+ answerDao.numberOfTimesChosen(option.getId()) +". </p>";
             }
             responseText += "</div>";
         }
