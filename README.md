@@ -34,6 +34,10 @@ Dette programmet består av en http-server, FlywayDB scripts for opprettelse av 
 * Godt forklarende README.md med illustrerende bilder - Vi prøvde å få det tydelig og oversiktig ikke bare for deg, men for vår egendel også.
 ---
 ## Beskriv hvordan programmet skal testes:
+Kjør denne kommandoen via kommandolinje:
+```
+mvn package
+```
 I rot-katalogen (hvor du har pgr203.properties og target katalog med .jar filen) kjører du denne kommandoen via kommandolinje:
 ```
 java -jar target\pgr203-exam-willidachili-1.0-SNAPSHOT.jar
