@@ -116,7 +116,7 @@ public class HttpServer {
         }
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setURL(properties.getProperty("dataSource.url", "jdbc:postgresql://localhost:5432/postgres"));
-        dataSource.setUser(properties.getProperty("dataSource.user"));
+        dataSource.setUser(properties.getProperty("dataSource.username"));
         dataSource.setPassword(properties.getProperty("dataSource.password"));
         Flyway.configure().dataSource(dataSource).load().migrate();
         return dataSource;
