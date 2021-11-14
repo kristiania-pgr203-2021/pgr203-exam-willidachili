@@ -106,4 +106,5 @@ Mulige ekstrapoeng fortalt i forelesninger som vi tokk med:
 * [x] God bruk av Controller-pattern
 
 Annet:
+* [x] Kan vise antall svar på registrerte svar i DB (Gjør nettsiden til en mer helhetelig løsning spesielt med tanke på hvordan vi tokk det med anonymitet)
 * [x] Godt forklarende README.md med illustrerende bilde
